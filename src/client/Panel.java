@@ -2,15 +2,13 @@ package client;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Panel extends JPanel {
-    static final int width = 525;
-    static final int height = 700;
+    static final int width = 1000;
+    static final int height = width*9/16;
     public Panel(){
         setPreferredSize(new Dimension(width, height));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(new Color(9, 199, 64));
-        Container pane = new Container();
+        setBackground(new Color(25, 120, 149));
+        setLayout(null);
     }
 }
