@@ -13,5 +13,6 @@ public class Button extends JButton {
         setText(value);
         setForeground(fgClr);
         setBackground(bgClr);
+        setBorder(BorderFactory.createSoftBevelBorder(0, bgClr, Color.BLACK));
     }
 }
