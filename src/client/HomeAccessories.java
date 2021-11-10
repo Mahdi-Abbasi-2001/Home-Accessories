@@ -7,6 +7,8 @@ import client.Window;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
@@ -35,20 +37,29 @@ public class HomeAccessories {
         panelComps.add(new Line(700, 60, 450, Line.Direction.horizontal));
         Button enter = new Button(170, 435, 500, 30, "ادامه", Color.WHITE,
                 new Color(146, 0, 255));
+        CheckBox agreement = new CheckBox(450, 370, 300, 30,
+                "قوانین و مقررات را مطالعه کردم و با آن موافقم.");
         enter.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                mainPage();
+                if(agreement.isSelected())
+                    mainPage();
             }
         });
+        enter.setEnabled(false);
         panelComps.add(enter);
         try {
             ArrayList<String> text = (ArrayList<String>) Files.readAllLines(Paths.get("content/terms_of_service.txt"));
-            panelComps.add(new ScrollPane(80, 200, 600, 200, text));
-//            panelComps.add(new JScrollPane(new Text(50, 200, 600, 200, text, Color.BLACK, 15)));
+            panelComps.add(new ScrollPane(80, 150, 600, 200, text));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        agreement.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                enter.setEnabled((e.getStateChange() == ItemEvent.SELECTED));
+            }
+        });
+        panelComps.add(agreement);
         refreshPage();
     }
 
