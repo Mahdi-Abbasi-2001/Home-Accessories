@@ -64,7 +64,18 @@ public class HomeAccessories {
     }
 
     private static void mainPage(){
-        panelComps.add(new Text(100, 100, 100, 100, "hi", Color.BLACK, 20));
+        panelComps.add(new Text(650, 70, 100, 50, "نام کاربری", Color.WHITE, 16));
+        TextField username = new TextField(300, 130, 400, 50);
+        panelComps.add(username);
+        panelComps.add(new Text(650, 190, 100, 50, "رمز عبور", Color.WHITE, 16));
+        TextField password = new TextField(300, 250, 400, 50);
+        panelComps.add(password);
+        panelComps.add(new Text(620, 310, 100, 50, "تکرار رمز عبور", Color.WHITE, 16));
+        TextField password_again = new TextField(300, 370, 400, 50);
+        panelComps.add(password_again);
+        Button submit = new Button(250, 450, 500, 50, "ثبت نام", Color.WHITE,
+                new Color(146, 0, 255));
+        panelComps.add(submit);
         refreshPage();
     }
 
