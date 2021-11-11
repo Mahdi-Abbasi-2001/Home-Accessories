@@ -1,12 +1,9 @@
 package client;
 
-import client.Button;
-import client.Panel;
-import client.Text;
-import client.Window;
 import server.Customer;
 import server.Manager;
 import server.Producer;
+import server.Users;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +11,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -86,6 +82,7 @@ public class HomeAccessories {
             public void mouseClicked(MouseEvent e) {
                 if (password.getText().equals(password_again.getText())) {
                     mgUser = new Manager(username.getText(), password.getText());
+                    Users.manager = mgUser;
                     panelComps.add(new Text(420, 100, 250, 50,
                             "ساخت برنامه با موفقیت تکمیل شد.", Color.GREEN, 16));
                     mainPage();
@@ -104,18 +101,75 @@ public class HomeAccessories {
     public static void mainPage(){
         Button login = new Button(250, 200, 500, 80, "ورود", Color.WHITE,
                 new Color(146, 0, 255));
+        login.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                loginPage();
+            }
+        });
         panelComps.add(login);
         Button signup = new Button(250, 320, 500, 80, "ثبت نام", Color.WHITE,
                 new Color(146, 0, 255));
+        signup.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                signupPage();
+            }
+        });
         panelComps.add(signup);
         refreshPage();
-//        String[] roles = {"Customer", "Producer", "Manager"};
-//        panelComps.add(new List(10, 10, 10, 10, roles));
     }
+
+    public static void loginPage(){}
 
     public static void signupPage(){
-
+        panelComps.add(new Text(610, 20, 100, 50, "نام و نام خانوادگی", Color.WHITE, 16));
+        TextField name = new TextField(300, 80, 400, 30);
+        panelComps.add(name);
+        panelComps.add(new Text(650, 120, 100, 50, "نام کاربری", Color.WHITE, 16));
+        TextField username = new TextField(300, 180, 400, 30);
+        panelComps.add(username);
+        panelComps.add(new Text(650, 220, 100, 50, "رمز عبور", Color.WHITE, 16));
+        TextField password = new TextField(300, 280, 400, 30);
+        panelComps.add(password);
+        panelComps.add(new Text(620, 320, 100, 50, "تکرار رمز عبور", Color.WHITE, 16));
+        TextField password_again = new TextField(300, 380, 400, 30);
+        panelComps.add(password_again);
+        String[] roles = {"مشتری", "تولیدکننده"};
+        ComboBox combo = new ComboBox(600, 435, 100, 30, roles);
+        panelComps.add(combo);
+        Button submit = new Button(250, 510, 500, 30, "ثبت نام", Color.WHITE,
+                new Color(146, 0, 255));
+        submit.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(password.getText().equals(password_again.getText()))
+                    switch(combo.getSelectedIndex()){
+                        case 0 ->{
+                            ctUser = new Customer(name.getText(), username.getText(), password.getText());
+                            Users.customers.add(ctUser);
+                            customerPanel();
+                        }
+                        case 1 ->{
+                            pdUser = new Producer(name.getText(), username.getText(), password.getText());
+                            Users.producers.add(pdUser);
+                            producerPanel();
+                        }
+                    }
+                else{
+                    panelComps.add(new Text(390, 470, 300, 30,
+                            "رمز عبور و تکرار رمز عبور همخوانی ندارند.", new Color(255, 0, 0), 17));
+                    signupPage();
+                }
+            }
+        });
+        panelComps.add(submit);
+        refreshPage();
     }
+
+    public static void customerPanel(){}
+
+    public static void producerPanel(){}
 
     public static void refreshPage(){
         panel.removeAll();
