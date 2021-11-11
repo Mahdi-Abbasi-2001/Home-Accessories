@@ -3,7 +3,6 @@ package server;
 import java.util.List;
 
 public class Manager {
-    private String name;
     private List<Producer> producers;
     private List<Product> products;
     private String username;
@@ -27,14 +26,6 @@ public class Manager {
         for(Product product:products){
             product.setBrand(name);
         }
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setUsername(String username) {

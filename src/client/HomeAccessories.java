@@ -4,6 +4,9 @@ import client.Button;
 import client.Panel;
 import client.Text;
 import client.Window;
+import server.Customer;
+import server.Manager;
+import server.Producer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,14 +23,17 @@ import java.util.ArrayList;
 public class HomeAccessories {
     static Window window;
     static Panel panel;
-    static ArrayList<JComponent> panelComps = new ArrayList<JComponent>();
+    static Manager mgUser;
+    static Producer pdUser;
+    static Customer ctUser;
+    static ArrayList<JComponent> panelComps = new ArrayList<>();
     public static void main(String[] args) {
         window = new Window();
         panel = window.panel;
-        startPage();
+        welcomePage();
     }
 
-    private static void startPage(){
+    private static void welcomePage(){
         panelComps.add(new Text(450, 10, 100, 50, "باسمه تعالی", Color.WHITE, 25));
         panelComps.add(new Text(250, 50, 400,100,
                 "به فروشگاه مهدی خوش آمدید."+
@@ -43,7 +49,7 @@ public class HomeAccessories {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(agreement.isSelected())
-                    mainPage();
+                    startPage();
             }
         });
         enter.setEnabled(false);
@@ -63,7 +69,7 @@ public class HomeAccessories {
         refreshPage();
     }
 
-    private static void mainPage(){
+    private static void startPage(){
         panelComps.add(new Text(650, 70, 100, 50, "نام کاربری", Color.WHITE, 16));
         TextField username = new TextField(300, 130, 400, 50);
         panelComps.add(username);
@@ -73,10 +79,42 @@ public class HomeAccessories {
         panelComps.add(new Text(620, 310, 100, 50, "تکرار رمز عبور", Color.WHITE, 16));
         TextField password_again = new TextField(300, 370, 400, 50);
         panelComps.add(password_again);
-        Button submit = new Button(250, 450, 500, 50, "ثبت نام", Color.WHITE,
+        Button submit = new Button(250, 475, 500, 50, "ساخت مدیر", Color.WHITE,
                 new Color(146, 0, 255));
+        submit.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (password.getText().equals(password_again.getText())) {
+                    mgUser = new Manager(username.getText(), password.getText());
+                    panelComps.add(new Text(420, 100, 250, 50,
+                            "ساخت برنامه با موفقیت تکمیل شد.", Color.GREEN, 16));
+                    mainPage();
+                }
+                else{
+                    panelComps.add(new Text(390, 430, 300, 50,
+                            "رمز عبور و تکرار رمز عبور همخوانی ندارند.", new Color(255, 0, 0), 17));
+                    startPage();
+                }
+            }
+        });
         panelComps.add(submit);
         refreshPage();
+    }
+
+    public static void mainPage(){
+        Button login = new Button(250, 200, 500, 80, "ورود", Color.WHITE,
+                new Color(146, 0, 255));
+        panelComps.add(login);
+        Button signup = new Button(250, 320, 500, 80, "ثبت نام", Color.WHITE,
+                new Color(146, 0, 255));
+        panelComps.add(signup);
+        refreshPage();
+//        String[] roles = {"Customer", "Producer", "Manager"};
+//        panelComps.add(new List(10, 10, 10, 10, roles));
+    }
+
+    public static void signupPage(){
+
     }
 
     public static void refreshPage(){
