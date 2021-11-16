@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Text extends JLabel {
-    String s;
     public Text(int x, int y, int width, int height, String value, Color fgClr, int fontSize){
         setBounds(x, y, width, height);
         if (value.contains("<br />")){

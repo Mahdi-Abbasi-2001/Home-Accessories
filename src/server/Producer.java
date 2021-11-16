@@ -1,27 +1,21 @@
 package server;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Producer {
     private String name;
     private String username;
     private String password;
-    private List<Product> products;
+    private final ArrayList<Product> products = new ArrayList<>();
     public Producer(String name, String username, String password){
         this.name = name;
         this.username = username;
         this.password = password;
+        Users.producers.add(this);
+        Users.manager.getProducers().add(this);
     }
-    public void addProduct(Product product){
-        products.add(product);
-    }
-    public void deleteProduct(Product product){
-        products.remove(product);
-    }
-    public void changePrice(Product product, int price){
-        product.setPrice(price);
-    }
-    public List<Product> showProducts(){
+
+    public ArrayList<Product> getProducts(){
         return products;
     }
 

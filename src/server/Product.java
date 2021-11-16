@@ -1,30 +1,57 @@
 package server;
 
-import java.awt.*;
-
 public class Product {
+    private String name;
+    private Producer producer;
     private int price;
-    private String brand;
     private int number;
     private Type type;
     private int size;
     private int power;
     private int space;
-    public Product(int price, String brand, int number, Type type, int special){
+    public Product(String name, int price, int number, int type, int special, Producer producer){
+        Users.manager.getProducts().add(this);
+        producer.getProducts().add(this);
+        this.name = name;
         this.price = price;
-        this.brand = brand;
         this.number = number;
-        this.type = type;
-        switch (this.type){
-            case TV:
-                this.size = special;
-            case AC:
+        this.producer = producer;
+        switch (type){
+            case 1 ->{
+                this.type = Type.AC;
                 this.power = special;
-            case Refrigerator:
+            }
+            case 2 ->{
+                this.type = Type.TV;
+                this.size = special;
+            }
+            case 3 ->{
+                this.type = Type.Refrigerator;
                 this.space = special;
+            }
         }
     }
 
+    public void remove(){
+        Users.manager.getProducts().remove(this);
+        producer.getProducts().remove(this);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setProducer(Producer producer) {
+        this.producer = producer;
+    }
+
+    public Producer getProducer() {
+        return producer;
+    }
 
     public void setPrice(int price) {
         this.price = price;
@@ -32,14 +59,6 @@ public class Product {
 
     public int getPrice() {
         return price;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getBrand() {
-        return brand;
     }
 
     public void setNumber(int number) {

@@ -1,31 +1,37 @@
 package server;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Manager {
-    private List<Producer> producers;
-    private List<Product> products;
+    private final ArrayList<Producer> producers = new ArrayList<>();
+    private final ArrayList<Product> products = new ArrayList<>();
     private String username;
     private String password;
     public Manager(String username, String password){
         this.username = username;
         this.password = password;
+        Customer.manager = this;
+        Users.manager = this;
     }
+
     public void setDiscount(int percent){
         for(Product product:products)
             product.setPrice(product.getPrice()*((100-percent)/100));
     }
-    public List<Product> showProducts(){
-        return products;
-    }
-    public List<Producer> showProducers(){
-        return producers;
-    }
+
     public void changeProducerName(Producer producer, String name){
         producer.setName(name);
         for(Product product:products){
-            product.setBrand(name);
+            product.getProducer().setName(name);
         }
+    }
+
+    public ArrayList<Producer> getProducers() {
+        return producers;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
     }
 
     public void setUsername(String username) {
